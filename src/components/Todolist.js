@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux"
 
-import List from './List';
-import { fetchTodos, addTodo, updateTodo, deleteTodo } from "../actions/todoActions"
+import AddTodo from './AddTodo';
+import { fetchTodos, updateTodo, deleteTodo } from "../actions/todoActions"
 
 const mapStateToProps = (store) => ({
   todos: store.todos.todos
@@ -11,26 +11,24 @@ const mapStateToProps = (store) => ({
 // wraps dispatch to create nicer functions to call within our component
 const mapDispatchToProps = (dispatch) => ({
   dispatch: dispatch,
-  //startup: () => dispatch(StartupActions.startup())
 })
 
-
-
 class Todolist extends Component {
-  // This syntax ensures `this` is bound within handleClick.
-  // Warning: this is *experimental* syntax.
-
-  constructor(){
+ constructor(){
     super();
+    this.deleteTodo = this.deleteTodo.bind(this);
  }
 
  fetchTodos(){
    this.props.dispatch(fetchTodos());
  }
 
-
+ deleteTodo(e) {
+   var todoId = Number(e.target.value);
+   this.props.dispatch(deleteTodo(todoId));
+ }
   
-  componentWillMount() {
+ componentWillMount() {
     console.log("Component will mount");
     fetchTodos();
 }
@@ -39,31 +37,19 @@ class Todolist extends Component {
      let input;
      const { todos } = this.props;
      console.log(todos);
-     const mappedTodos = todos.map(todo => <li key={todo.id}>{todo.text}</li>)
+     const mappedTodos = todos.map(todo => 
+        <li key={todo.id}>
+          {todo.text}
+          <span>
+              <button value={todo.id} onClick={this.deleteTodo}> delete </button>
+          </span>
+        </li>
+        )
 
     return (
-        <div>
-          <div>
-            <input type="button" onClick={this.fetchTodos.bind(this)} value="Reload"/>
-            <br/> <br/>
-          </div>
-          <div>
-      <form onSubmit={e => {
-        e.preventDefault()
-        if (!input.value.trim()) {
-          return
-        }
-        this.props.dispatch(addTodo(input.value))
-        input.value = ''
-      }}>
-        <input ref={node => {
-          input = node
-        }} />
-        <button type="submit">
-          Add Todo
-        </button>
-      </form>
-    </div>
+        <div>                   
+          <AddTodo/>
+        
           <div>
             <ul>{mappedTodos}</ul>
           </div>

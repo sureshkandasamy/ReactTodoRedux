@@ -2,23 +2,9 @@ let nextTodoId = 0
 
 export function fetchTodos() {
   console.log("in fetchTodos");
-  var todos = [{
-        id: 100,
-        text: "first thing",
-      },
-      {
-        id:101,
-        text: "second thing",
-      },
-      {
-        id: 102,
-        text: "third thing",
-      }
-      ];
-
   return {
     type: "FETCH_TODOS_FULFILLED",
-    payload: todos
+    payload: {}
   }
 }
 

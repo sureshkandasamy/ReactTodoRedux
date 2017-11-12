@@ -1,17 +1,5 @@
 export default function reducer(state={
-    todos: [{
-      id: 100,
-      text: "first thing",
-    },
-    {
-      id:101,
-      text: "second thing",
-    },
-    {
-      id: 102,
-      text: "third thing",
-    }
-    ],
+    todos: [],
     fetching: false,
     fetched: false,
     error: null,
@@ -26,7 +14,7 @@ export default function reducer(state={
       }
       case "FETCH_TODOS_FULFILLED": {
         console.log(state.todos);
-        console.log(action.payload)
+        console.log(action.payload);
         return {
           ...state,
           fetching: false,
@@ -52,9 +40,11 @@ export default function reducer(state={
         }
       }
       case "DELETE_TODO": {
+         const newTodos = state.todos.filter(todo => todo.id !== action.payload);
+        console.log(newTodos)
         return {
           ...state,
-          todos: state.todos.filter(todo => todo.id !== action.payload),
+          todos: newTodos,
         }
       }
     }
