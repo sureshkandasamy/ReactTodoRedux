@@ -2,8 +2,9 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Button from './Button'
-import Todolist from './Todolist'
+import Button from './components/Button'
+import Todolist from './components/Todolist'
+
 
 class App extends Component {
   render() {
@@ -21,5 +22,7 @@ class App extends Component {
     );
   }
 }
+
+//store.subscribe(render)
 
 export default App;
